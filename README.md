@@ -1,5 +1,8 @@
 
-# hubmeta
+<img width="200" src="man/figures/hubmeta-logo.png?raw=TRUE" alt="hubmeta logo" align="left">
+
+# Hubmeta
+## Meta-Analysis Toolkit
 
 <!-- badges: start -->
 <!-- badges: end -->
