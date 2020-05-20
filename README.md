@@ -11,7 +11,8 @@ Hubmeta is a meta-analysis toolkit.
 You can install the released version of hubmeta from [GITHUB](https://github.com/hubmeta/R) with:
 
 ``` r
-remotes::install_github("hubmeta/r")
+install.packages("devtools")
+devtools::install_github("username/packagename")
 ```
 
 ## Example
