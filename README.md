@@ -15,7 +15,7 @@ You can install the released version of hubmeta from [GITHUB](https://github.com
 
 ``` r
 install.packages("devtools")
-devtools::install_github("username/packagename")
+devtools::install_github("hubmeta/r")
 ```
 
 ## Example
