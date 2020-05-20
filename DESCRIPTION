@@ -2,12 +2,20 @@ Package: hubmeta
 Title: Meta Analysis Package
 Version: 0.0.0.9000
 Authors@R: 
+    person(given = "Hadi",
+           family = "Fariborzi",
+           role = c("aut", "cre"),
+           email = "hadi@hubmeta.com")
+   person(given = "Piers",
+           family = "Steel",
+           role = c("aut", "cre"),
+           email = "piers@hubmeta.com")
     person(given = "Amirhossein",
            family = "Saeidmehr",
            role = c("aut", "cre"),
-           email = "amir.saiedmehr@gmail.com")
+           email = "amir@hubmeta.com")
 Description: What the package does (one paragraph).
-License: GPL-3
+License: `use_gpl3_license()`
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
