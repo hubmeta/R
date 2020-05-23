@@ -11,11 +11,6 @@
 meta_analysis <- function(correlations, sample_sizes, reliability_of_x, reliability_of_y, significance_levels) {
   #INPUTS:
 
-  correlations <- c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)             # correlations
-  sample_sizes <- c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)         # sample sizes
-  reliability_of_x <- c(.85, .77, .80, .86, .80, .79, .91, .85, .92, .85)         # reliability of x
-  reliability_of_y <- c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)         # reliability of y
-  significance_levels <- c(0.95, 0.80)                                                 # Significance level of 1)Confidence intervals; 2)Credibility intervals
   #Am <- c()                                                       #TODO: For future purposes to included other attenuation factors
 
 
