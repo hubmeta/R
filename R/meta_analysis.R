@@ -2,19 +2,37 @@
 #'
 #'@param correlations: correlations should pass like c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)
 #'@param sample_sizes: sample sizes should pass like c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)
-#'@param reliability_of_x: reliability of x should pass like c(.85, .77, .80, .86, .80, .79, .91, .85, .92, .85)
+#'@param reliability_of_x: reliability of x should pass like c(.85, NA, NA, .86, .80, .79, .91, .85, .92, .85)
 #'@param reliability_of_y: reliability of y should pass like c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)
 #'@param significance_levels: Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass
+#'@param default_reliability: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
 #' like c(0.95, 0.80)
 #'@return result data frame
 #'@export
 #'
-#'this file is our meta analysis function
-meta_analysis <- function(correlations, sample_sizes, reliability_of_x, reliability_of_y, significance_levels) {
+
+meta_analysis <- function(
+  correlations,
+  sample_sizes,
+  reliability_of_x,
+  reliability_of_y,
+  significance_levels,
+  default_reliability=1
+  ) {
   #INPUTS:
 
   #Am <- c()                                                       #TODO: For future purposes to included other attenuation factors
+  if(is.null(default_reliability)){
+    default_reliability_of_x <- mean(reliability_of_x, na.rm=TRUE)
+    default_reliability_of_y <- mean(reliability_of_y, na.rm=TRUE)
+  }
+  else{
+    default_reliability_of_x <- default_reliability
+    default_reliability_of_y <- default_reliability
+  }
 
+  reliability_of_x <- replace (reliability_of_x, is.na(reliability_of_x), default_reliability_of_x)
+  reliability_of_y <- replace (reliability_of_y, is.na(reliability_of_y), default_reliability_of_y)
 
   data <- cbind(correlations, sample_sizes, reliability_of_x, reliability_of_y)                                    #Pack data in dataframe, just for checking purposes
 
