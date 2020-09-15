@@ -8,6 +8,8 @@
 #' like c(0.95, 0.80)
 #'@return result data frame
 #'@export
+#'
+#'this file is our meta analysis function
 meta_analysis <- function(correlations, sample_sizes, reliability_of_x, reliability_of_y, significance_levels) {
   #INPUTS:
 
