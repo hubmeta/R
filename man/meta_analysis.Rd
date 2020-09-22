@@ -9,7 +9,9 @@ meta_analysis(
   sample_sizes,
   reliability_of_x,
   reliability_of_y,
-  significance_levels
+  significance_levels,
+  default_reliability_of_x = 1,
+  default_reliability_of_y = 1
 )
 }
 \arguments{
@@ -17,11 +19,13 @@ meta_analysis(
 
 \item{sample_sizes:}{sample sizes should pass like c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)}
 
-\item{reliability_of_x:}{reliability of x should pass like c(.85, .77, .80, .86, .80, .79, .91, .85, .92, .85)}
+\item{reliability_of_x:}{reliability of x should pass like c(.85, NA, NA, .86, .80, .79, .91, .85, .92, .85)}
 
 \item{reliability_of_y:}{reliability of y should pass like c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)}
 
-\item{significance_levels:}{Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass
+\item{significance_levels:}{Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass}
+
+\item{default_reliability:}{if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
 like c(0.95, 0.80)}
 }
 \value{

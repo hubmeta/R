@@ -5,7 +5,9 @@
 #'@param reliability_of_x: reliability of x should pass like c(.85, NA, NA, .86, .80, .79, .91, .85, .92, .85)
 #'@param reliability_of_y: reliability of y should pass like c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)
 #'@param significance_levels: Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass
-#'@param default_reliability: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
+#'@param default_reliability_of_x: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
+#'#'@param default_reliability_of_y: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
+
 #' like c(0.95, 0.80)
 #'@return result data frame
 #'@export
@@ -17,7 +19,8 @@ meta_analysis <- function(
   reliability_of_x,
   reliability_of_y,
   significance_levels,
-  default_reliability=1
+  default_reliability_of_x=1,
+  default_reliability_of_y=1
   ) {
   #INPUTS:
 
@@ -26,13 +29,9 @@ meta_analysis <- function(
     default_reliability_of_x <- mean(reliability_of_x, na.rm=TRUE)
     default_reliability_of_y <- mean(reliability_of_y, na.rm=TRUE)
   }
-  else{
-    default_reliability_of_x <- default_reliability
-    default_reliability_of_y <- default_reliability
-  }
 
-  reliability_of_x <- replace (reliability_of_x, is.na(reliability_of_x), default_reliability_of_x)
-  reliability_of_y <- replace (reliability_of_y, is.na(reliability_of_y), default_reliability_of_y)
+  reliability_of_x <- replace(reliability_of_x, is.na(reliability_of_x), default_reliability_of_x)
+  reliability_of_y <- replace(reliability_of_y, is.na(reliability_of_y), default_reliability_of_y)
 
   data <- cbind(correlations, sample_sizes, reliability_of_x, reliability_of_y)                                    #Pack data in dataframe, just for checking purposes
 
