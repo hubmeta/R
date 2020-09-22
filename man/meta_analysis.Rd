@@ -25,7 +25,8 @@ meta_analysis(
 
 \item{significance_levels:}{Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass}
 
-\item{default_reliability:}{if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
+\item{default_reliability_of_x:}{if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
+#'@param default_reliability_of_y: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
 like c(0.95, 0.80)}
 }
 \value{

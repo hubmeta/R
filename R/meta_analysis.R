@@ -25,8 +25,12 @@ meta_analysis <- function(
   #INPUTS:
 
   #Am <- c()                                                       #TODO: For future purposes to included other attenuation factors
-  if(is.null(default_reliability)){
+  if(is.null(default_reliability_of_x)){
     default_reliability_of_x <- mean(reliability_of_x, na.rm=TRUE)
+
+  }
+
+  if(is.null(default_reliability_of_y)){
     default_reliability_of_y <- mean(reliability_of_y, na.rm=TRUE)
   }
 
@@ -99,6 +103,7 @@ meta_analysis <- function(
   AveZ <- sum(WF * AZ) / sum(WF)                                        #Fixed-effects adjusted average weighted effect size, Fisher's Z
   rfisherfixed <- (exp(2 * AveZ) - 1) / (exp(2 * AveZ) + 1)       #Mean Effect Size (r) , adjusted, Fixed-effects Fisher's Z model
   SEZes = sqrt(1 / sum(W))                                            #Standard Error (Z)
+
   Zc <- sum(FZ / SEF) / sqrt(K)
   FSN <- K * ((Zc / siglev)^2 - 1)                          #Failsafe N Rosenthal(1979)
 
@@ -131,12 +136,12 @@ meta_analysis <- function(
   results <- cbind(K, N, rmean, sigmar2, SDr, SEr, sigmae2, sigmarho2, sigmarho, PercExp, CIlowr, CIhighr,
                    CRlowr, CRhighr, rcmean, VarRc, AveVe, VarRho, SDrho, SDrc, SErc, CIlowrc, CIhighrc,
                    CRlowrc, CRhighrc, AveZ, rfisherfixed, SEZes, CIESlow, CIEShigh, FisherCILow, FisherCIHigh, Q, dr,
-                   I2, tau2, REAveZ, rfisherrandom, RESEz, RECIESlow, RECIEShigh, REFisherCILow, REFisherCIHigh)
+                   I2, tau2, REAveZ, rfisherrandom, RESEz, RECIESlow, RECIEShigh, REFisherCILow, REFisherCIHigh, FSN)
 
   colnames(results) <- c("K", "N", "rmean", "sigmar2", "SDr", "SEr", "sigmae2", "sigmarho2", "sigmarho", "PercExp", "CIlowr", "CIhighr",
                          "CRlowr", "CRhighr", "rcmean", "VarRc", "AveVe", "VarRho", "SDrho", "SDrc", "SErc", "CIlowrc", "CIhighrc",
                          "CRlowrc", "CRhighrc", "AveZ", "rfisherfixed", "SEZes", "CIESlow", "CIEShigh", "FisherCILow", "FisherCIHigh", "Q", "dr",
-                         "I2", "tau2", "REAveZ", "rfisherrandom", "RESEz", "RECIESlow", "RECIEShigh", "REFisherCILow", "REFisherCIHigh")
+                         "I2", "tau2", "REAveZ", "rfisherrandom", "RESEz", "RECIESlow", "RECIEShigh", "REFisherCILow", "REFisherCIHigh", "FSN")
 
   results <- as.data.frame(results)
 

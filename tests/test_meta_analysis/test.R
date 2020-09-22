@@ -49,4 +49,5 @@ test_that("Test meta analysis function with sample data", {
   expect_equal(a[40], 0.33746947579566)
   expect_equal(a[41], 0.135038419022624)
   expect_equal(a[42], 0.325216378820423)
+  expect_equal(a[43], 188.5554)
 })
