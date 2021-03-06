@@ -33,6 +33,13 @@ meta_analysis <- function(
   if(is.null(default_reliability_of_y)){
     default_reliability_of_y <- mean(reliability_of_y, na.rm=TRUE)
   }
+  if(is.nan(default_reliability_of_x)){
+    default_reliability_of_x <- 1
+  }
+
+  if(is.nan(default_reliability_of_y)){
+    default_reliability_of_y <- 1
+  }
 
   reliability_of_x <- replace(reliability_of_x, is.na(reliability_of_x), default_reliability_of_x)
   reliability_of_y <- replace(reliability_of_y, is.na(reliability_of_y), default_reliability_of_y)
