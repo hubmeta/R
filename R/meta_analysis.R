@@ -140,6 +140,19 @@ meta_analysis <- function(
   REFisherCILow <- (exp(2 * RECIESlow) - 1) / (exp(2 * RECIESlow) + 1)      #Correlation equivalent of random-Effects Model, Adjusted , Confidence interval lower bound Fisher's Z estimate
   REFisherCIHigh <- (exp(2 * RECIEShigh) - 1) / (exp(2 * RECIEShigh) + 1)   #Correlation equivalent of random-Effects Model, Adjusted , Confidence interval lower bound Fisher's Z estimate
 
+  if(rmean>1){
+    rmean <- 1
+  }
+  if(-1>rmean){
+    rmean <- -1
+  }
+  if(rcmean>1){
+    rcmean <- 1
+  }
+  if(-1>rcmean){
+    rcmean <- -1
+  }
+
   results <- cbind(K, N, rmean, sigmar2, SDr, SEr, sigmae2, sigmarho2, sigmarho, PercExp, CIlowr, CIhighr,
                    CRlowr, CRhighr, rcmean, VarRc, AveVe, VarRho, SDrho, SDrc, SErc, CIlowrc, CIhighrc,
                    CRlowrc, CRhighrc, AveZ, rfisherfixed, SEZes, CIESlow, CIEShigh, FisherCILow, FisherCIHigh, Q, dr,
