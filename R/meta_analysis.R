@@ -70,8 +70,8 @@ meta_analysis <- function(
   sigmae2 <- (1 - rmean^2)^2 / (N / K - 1)                            #Sampling Error Variance (estimate)
   sigmarho2 <- ifelse((sigmar2 - sigmae2) < 0, 0, sigmar2 - sigmae2)  # Residual Variance (variance of population) (ơp^2)
   sigmarho <- sqrt(sigmarho2)                                    #Residual S.D. (ơp)
-  PercExp <- sigmae2 / sigmar2                                    #Percentage explained (by sampling error)
-
+  PercExp   <- ifelse((sigmar2 - sigmae2) < 0, 0, sigmae2/sigmar2 ) #Percentage explained (by sampling error)
+  
   siglev <- qnorm(1 - (1 - significance_levels[1]) / 2)                              #Significance level confidence interval
   credsig <- qnorm(1 - (1 - significance_levels[2]) / 2)                             #Significance level credibility interval
 
