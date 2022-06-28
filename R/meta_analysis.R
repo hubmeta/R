@@ -7,6 +7,7 @@
 #'@param significance_levels: Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass
 #'@param default_reliability_of_x: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
 #'#'@param default_reliability_of_y: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
+# comment test
 
 #' like c(0.95, 0.80)
 #'@return result data frame
@@ -71,7 +72,7 @@ meta_analysis <- function(
   sigmarho2 <- ifelse((sigmar2 - sigmae2) < 0, 0, sigmar2 - sigmae2)  # Residual Variance (variance of population) (ơp^2)
   sigmarho <- sqrt(sigmarho2)                                    #Residual S.D. (ơp)
   PercExp   <- ifelse((sigmar2 - sigmae2) < 0, 0, sigmae2/sigmar2 ) #Percentage explained (by sampling error)
-  
+
   siglev <- qnorm(1 - (1 - significance_levels[1]) / 2)                              #Significance level confidence interval
   credsig <- qnorm(1 - (1 - significance_levels[2]) / 2)                             #Significance level credibility interval
 
