@@ -2,7 +2,7 @@
 % Please edit documentation in R/meta_analysis.R
 \name{meta_analysis}
 \alias{meta_analysis}
-\title{Square the file}
+\title{Meta analysis main function}
 \usage{
 meta_analysis(
   correlations,
@@ -33,5 +33,5 @@ like c(0.95, 0.80)}
 result data frame
 }
 \description{
-Square the file
+Meta analysis main function
 }

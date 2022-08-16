@@ -2,7 +2,7 @@
 % Please edit documentation in R/morris_weight_outlier.R
 \name{outlier_detection_morris_weight}
 \alias{outlier_detection_morris_weight}
-\title{Square the file}
+\title{Morris weight outlier detection function}
 \usage{
 outlier_detection_morris_weight(
   correlations,
@@ -33,5 +33,5 @@ like c(0.95, 0.80)}
 result data frame
 }
 \description{
-Square the file
+Morris weight outlier detection function
 }

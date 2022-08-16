@@ -1,4 +1,4 @@
-#'Square the file
+#'Morris weight outlier detection function
 #'
 #'@param correlations: correlations should pass like c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)
 #'@param sample_sizes: sample sizes should pass like c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)
@@ -48,7 +48,6 @@ outlier_detection_morris_weight <- function(
 
   K <- length(sample_sizes)                                                    #Number of studies
   N <- sum(sample_sizes)                                                    #Total sample size
-
   library(metafor)
 
 

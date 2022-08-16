@@ -2,7 +2,7 @@
 % Please edit documentation in R/morris_weight_analysis.R
 \name{morris_weight_analysis}
 \alias{morris_weight_analysis}
-\title{Square the file}
+\title{Morris weigth function}
 \usage{
 morris_weight_analysis(
   correlations,
@@ -33,5 +33,5 @@ like c(0.95, 0.80)}
 result data frame
 }
 \description{
-Square the file
+Morris weigth function
 }
