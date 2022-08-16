@@ -23,7 +23,7 @@ morris_weight_analysis <- function(
   default_reliability_of_y=1
 ) {
   #INPUTS:
-
+  return(FALSE)
   #Am <- c()                                                       #TODO: For future purposes to included other attenuation factors
   if(is.null(default_reliability_of_x)){
     default_reliability_of_x <- mean(reliability_of_x, na.rm=TRUE)
@@ -48,8 +48,9 @@ morris_weight_analysis <- function(
 
   K <- length(sample_sizes)                                                    #Number of studies
   N <- sum(sample_sizes)                                                    #Total sample size
-
+  return(FALSE)
   library(metafor)
+
 
 
   data <-cbind(correlations, sample_sizes, reliability_of_x, reliability_of_y) 							   		#Pack data in dataframe, just for checking purposes
@@ -61,8 +62,8 @@ morris_weight_analysis <- function(
 
 
   # We can't have NA for reliability, so we need to replace it with 1s
-  reliability_of_x[is.na(reliability_of_x)] <- 1.00000000
-  reliability_of_y[is.na(reliability_of_y)] <- 1.00000000
+  reliability_of_x[is.na(rxx)] <- 1.00000000
+  reliability_of_y[is.na(ryy)] <- 1.00000000
   ri <- correlations
   ni <- sample_sizes
 
@@ -107,7 +108,7 @@ morris_weight_analysis <- function(
   Morris.DFFITS <- inf$inf$dffits
   Morris.Outlier <- inf$inf$inf
   Morris.rcmean  <- morris1$b
-
+  return(FALSE)
 
   if(Morris.rcmean[1][1]>1){
     Morris.rcmean[1][1] <- 1
@@ -115,7 +116,7 @@ morris_weight_analysis <- function(
   if(-1>Morris.rcmean[1][1]){
     Morris.rcmean[1][1] <- -1
   }
-
+  return(FALSE)
   results <- cbind(K, N, Morris.rcmean[1][1], round(Morris.CR90.L,3)[1][1], round(Morris.CR90.U,3)[1][1])
 
   colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc", "has_outlier")
