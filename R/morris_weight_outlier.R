@@ -13,7 +13,7 @@
 #'@export
 #'
 
-morris_weight_analysis <- function(
+outlier_detection_morris_weight <- function(
   correlations,
   sample_sizes,
   reliability_of_x,
@@ -108,20 +108,6 @@ morris_weight_analysis <- function(
   Morris.Outlier <- inf$inf$inf
   Morris.rcmean  <- morris1$b
 
-
-  if(Morris.rcmean[1][1]>1){
-    Morris.rcmean[1][1] <- 1
-  }
-  if(-1>Morris.rcmean[1][1]){
-    Morris.rcmean[1][1] <- -1
-  }
-
-  results <- cbind(K, N, Morris.rcmean[1][1], round(Morris.CR90.L,3)[1][1], round(Morris.CR90.U,3)[1][1])
-
-  colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc", "has_outlier")
-
-  results <- as.data.frame(results)
-
-  return(results)
+  return(inf$is.infl)
 }
 
