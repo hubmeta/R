@@ -32,5 +32,5 @@ data <- meta_analysis(c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28),
 )
 ```
 
-For more information take a look at [Colab Notebook](https://colab.research.google.com/drive/19_nRj9FMEZKXXgp1ZqH5Hej3pR9uh8Xe?usp=sharing).
+For more information take a look at [Colab Notebook](https://colab.research.google.com/drive/1I6Hr2wAE9-9kd6boDE2WaV7up4z-oQb3?usp=sharing).
 
