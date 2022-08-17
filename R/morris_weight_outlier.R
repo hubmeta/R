@@ -107,6 +107,13 @@ outlier_detection_morris_weight <- function(
   Morris.Outlier <- inf$inf$inf
   Morris.rcmean  <- morris1$b
 
-  return(inf$is.infl)
+  results <- cbind(inf$is.infl, Morris.DFFITS)
+
+
+  colnames(results) <- c("influence", "dffits")
+
+  results <- as.data.frame(results)
+
+  return(results)
 }
 
