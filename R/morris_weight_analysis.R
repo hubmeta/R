@@ -47,6 +47,17 @@ morris_weight_analysis <- function(
 
   K <- length(sample_sizes)                                                    #Number of studies
   N <- sum(sample_sizes)                                                    #Total sample size
+
+  if(K<2){
+    results <- cbind(K, N, NA, NA, NA)
+
+    colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc")
+
+    results <- as.data.frame(results)
+
+    return(results)
+  }
+
   library(metafor)
 
 
@@ -85,42 +96,54 @@ morris_weight_analysis <- function(
   ri.m <- ifelse(ri.m < -1, -1, ri.m) # avoid over corrections
 
   morris.dat <- data.frame(cbind(ri.m,var.i2, ni)) # collect corrected estimates of rxy and error
-  morris1 <- rma(yi=ri.m,vi=var.i2,data=morris.dat,
-                 control=list(maxiter=1000, stepadj=.5)) # run the random-effects meta with REML
-  morris1 # print the result
-  Morris.M.rho <- morris1$b
-  Morris.V.rho <- morris1$tau2 # random-effects variance component
-  Morris.SD.rho <- sqrt(morris1$tau2)
-  Morris.CR95.L <- (Morris.M.rho - 1.96*Morris.SD.rho) # Lower CR Bound
-  Morris.CR95.U <- (Morris.M.rho + 1.96*Morris.SD.rho) # Upper CR Bound
-  Morris.CR90.L <- (Morris.M.rho -  1.645*Morris.SD.rho) # Lower CR Bound
-  Morris.CR90.U <- (Morris.M.rho +  1.645*Morris.SD.rho) # Upper CR Bound
 
-  round(Morris.CR95.L,2)
-  round(Morris.CR95.U,2)
-  round(Morris.CR90.L,3)
-  round(Morris.CR90.U,3)
+  result = tryCatch({
+    morris1 <- rma(yi=ri.m,vi=var.i2,data=morris.dat,
+                   control=list(maxiter=1000, stepadj=.5)) # run the random-effects meta with REML
+    morris1 # print the result
+    Morris.M.rho <- morris1$b
+    Morris.V.rho <- morris1$tau2 # random-effects variance component
+    Morris.SD.rho <- sqrt(morris1$tau2)
+    Morris.CR95.L <- (Morris.M.rho - 1.96*Morris.SD.rho) # Lower CR Bound
+    Morris.CR95.U <- (Morris.M.rho + 1.96*Morris.SD.rho) # Upper CR Bound
+    Morris.CR90.L <- (Morris.M.rho -  1.645*Morris.SD.rho) # Lower CR Bound
+    Morris.CR90.U <- (Morris.M.rho +  1.645*Morris.SD.rho) # Upper CR Bound
 
-  options(max.print=10000)
-  inf <- influence(morris1)
-  Morris.DFFITS <- inf$inf$dffits
-  Morris.Outlier <- inf$inf$inf
-  Morris.rcmean  <- morris1$b
+    round(Morris.CR95.L,2)
+    round(Morris.CR95.U,2)
+    round(Morris.CR90.L,3)
+    round(Morris.CR90.U,3)
+
+    options(max.print=10000)
+    inf <- influence(morris1)
+    Morris.DFFITS <- inf$inf$dffits
+    Morris.Outlier <- inf$inf$inf
+    Morris.rcmean  <- morris1$b
 
 
-  if(Morris.rcmean[1][1]>1){
-    Morris.rcmean[1][1] <- 1
-  }
-  if(-1>Morris.rcmean[1][1]){
-    Morris.rcmean[1][1] <- -1
-  }
+    if(Morris.rcmean[1][1]>1){
+      Morris.rcmean[1][1] <- 1
+    }
+    if(-1>Morris.rcmean[1][1]){
+      Morris.rcmean[1][1] <- -1
+    }
 
-  results <- cbind(K, N, Morris.rcmean[1][1], round(Morris.CR90.L,3)[1][1], round(Morris.CR90.U,3)[1][1])
+    results <- cbind(K, N, Morris.rcmean[1][1], round(Morris.CR90.L,3)[1][1], round(Morris.CR90.U,3)[1][1])
 
-  colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc")
+    colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc")
 
-  results <- as.data.frame(results)
+    results <- as.data.frame(results)
 
-  return(results)
+    return(results)
+  },error = function(error_condition) {
+    results <- cbind(K, N, NA, NA, NA)
+
+    colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc")
+
+    results <- as.data.frame(results)
+
+    return(results)
+  })
+
 }
 

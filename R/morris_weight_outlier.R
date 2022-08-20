@@ -48,6 +48,16 @@ outlier_detection_morris_weight <- function(
 
   K <- length(sample_sizes)                                                    #Number of studies
   N <- sum(sample_sizes)                                                    #Total sample size
+  if(K<2){
+    results <- cbind(NA, NA)
+
+    colnames(results) <- c("influence", "dffits")
+
+    results <- as.data.frame(results)
+
+    return(results)
+  }
+
   library(metafor)
 
 
@@ -85,35 +95,51 @@ outlier_detection_morris_weight <- function(
   ri.m <- ifelse(ri.m < -1, -1, ri.m) # avoid over corrections
 
   morris.dat <- data.frame(cbind(ri.m,var.i2, ni)) # collect corrected estimates of rxy and error
-  morris1 <- rma(yi=ri.m,vi=var.i2,data=morris.dat,
-                 control=list(maxiter=1000, stepadj=.5)) # run the random-effects meta with REML
-  morris1 # print the result
-  Morris.M.rho <- morris1$b
-  Morris.V.rho <- morris1$tau2 # random-effects variance component
-  Morris.SD.rho <- sqrt(morris1$tau2)
-  Morris.CR95.L <- (Morris.M.rho - 1.96*Morris.SD.rho) # Lower CR Bound
-  Morris.CR95.U <- (Morris.M.rho + 1.96*Morris.SD.rho) # Upper CR Bound
-  Morris.CR90.L <- (Morris.M.rho -  1.645*Morris.SD.rho) # Lower CR Bound
-  Morris.CR90.U <- (Morris.M.rho +  1.645*Morris.SD.rho) # Upper CR Bound
-
-  round(Morris.CR95.L,2)
-  round(Morris.CR95.U,2)
-  round(Morris.CR90.L,3)
-  round(Morris.CR90.U,3)
-
-  options(max.print=10000)
-  inf <- influence(morris1)
-  Morris.DFFITS <- inf$inf$dffits
-  Morris.Outlier <- inf$inf$inf
-  Morris.rcmean  <- morris1$b
-
-  results <- cbind(inf$is.infl, Morris.DFFITS)
 
 
-  colnames(results) <- c("influence", "dffits")
+  result = tryCatch({
+    morris1 <- rma(yi=ri.m,vi=var.i2,data=morris.dat,
+                   control=list(maxiter=1000, stepadj=.5)) # run the random-effects meta with REML
+    morris1 # print the result
+    Morris.M.rho <- morris1$b
+    Morris.V.rho <- morris1$tau2 # random-effects variance component
+    Morris.SD.rho <- sqrt(morris1$tau2)
+    Morris.CR95.L <- (Morris.M.rho - 1.96*Morris.SD.rho) # Lower CR Bound
+    Morris.CR95.U <- (Morris.M.rho + 1.96*Morris.SD.rho) # Upper CR Bound
+    Morris.CR90.L <- (Morris.M.rho -  1.645*Morris.SD.rho) # Lower CR Bound
+    Morris.CR90.U <- (Morris.M.rho +  1.645*Morris.SD.rho) # Upper CR Bound
 
-  results <- as.data.frame(results)
+    round(Morris.CR95.L,2)
+    round(Morris.CR95.U,2)
+    round(Morris.CR90.L,3)
+    round(Morris.CR90.U,3)
 
-  return(results)
+    options(max.print=10000)
+    inf <- influence(morris1)
+    Morris.DFFITS <- inf$inf$dffits
+    Morris.Outlier <- inf$inf$inf
+    Morris.rcmean  <- morris1$b
+
+    results <- cbind(inf$is.infl, Morris.DFFITS)
+
+
+    colnames(results) <- c("influence", "dffits")
+
+    results <- as.data.frame(results)
+
+    return(results)
+
+
+  },error = function(error_condition) {
+
+    results <- cbind(NA, NA)
+
+    colnames(results) <- c("influence", "dffits")
+
+    results <- as.data.frame(results)
+
+    return(results)
+
+  })
 }
 
