@@ -49,7 +49,7 @@ morris_weight_analysis <- function(
   N <- sum(sample_sizes)                                                    #Total sample size
 
   if(K<2){
-    results <- cbind(K, N, correlations[1], NA, NA)
+    results <- cbind(K, N, round(correlations[1],2), NA, NA)
 
     colnames(results) <- c("K", "N", "rcmean", "CRlowrc", "CRhighrc")
 
