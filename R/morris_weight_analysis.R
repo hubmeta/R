@@ -1,15 +1,19 @@
 #'Morris weigth function
 #'
-#'@param correlations: correlations should pass like c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)
-#'@param sample_sizes: sample sizes should pass like c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)
-#'@param reliability_of_x: reliability of x should pass like c(.85, NA, NA, .86, .80, .79, .91, .85, .92, .85)
-#'@param reliability_of_y: reliability of y should pass like c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)
-#'@param significance_levels: Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass
-#'@param default_reliability_of_x: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
-#'#'@param default_reliability_of_y: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
-
-#' like c(0.95, 0.80)
-#'@return result data frame
+#' @param correlations Correlations to meta-analyze.
+#' @param sample_sizes Sample sizes aligned to `correlations`.
+#' @param reliability_of_x Reliability estimates for the x variable in each
+#'   study.
+#' @param reliability_of_y Reliability estimates for the y variable in each
+#'   study.
+#' @param significance_levels Numeric vector giving interval levels, for example
+#'   `c(0.95, 0.80)`.
+#' @param default_reliability_of_x Default replacement for missing x
+#'   reliabilities. If `NULL`, the mean of the observed reliabilities is used.
+#' @param default_reliability_of_y Default replacement for missing y
+#'   reliabilities. If `NULL`, the mean of the observed reliabilities is used.
+#'
+#' @return A one-row data frame of Morris-weight summary results.
 #'@export
 #'
 
@@ -58,10 +62,6 @@ morris_weight_analysis <- function(
     return(results)
   }
 
-  library(metafor)
-
-
-
   data <-cbind(correlations, sample_sizes, reliability_of_x, reliability_of_y) 							   		#Pack data in dataframe, just for checking purposes
 
   K <- length(sample_sizes)                    		 					    #Number of studies
@@ -98,8 +98,8 @@ morris_weight_analysis <- function(
   morris.dat <- data.frame(cbind(ri.m,var.i2, ni)) # collect corrected estimates of rxy and error
 
   result = tryCatch({
-    morris1 <- rma(yi=ri.m,vi=var.i2,data=morris.dat,
-                   control=list(maxiter=1000, stepadj=.5)) # run the random-effects meta with REML
+    morris1 <- metafor::rma(yi=ri.m,vi=var.i2,data=morris.dat,
+                            control=list(maxiter=1000, stepadj=.5)) # run the random-effects meta with REML
     morris1 # print the result
     Morris.M.rho <- morris1$b
     Morris.V.rho <- morris1$tau2 # random-effects variance component
@@ -115,7 +115,7 @@ morris_weight_analysis <- function(
     round(Morris.CR90.U,3)
 
     options(max.print=10000)
-    inf <- influence(morris1)
+    inf <- stats::influence(morris1)
     Morris.DFFITS <- inf$inf$dffits
     Morris.Outlier <- inf$inf$inf
     Morris.rcmean  <- morris1$b
@@ -146,4 +146,3 @@ morris_weight_analysis <- function(
   })
 
 }
-

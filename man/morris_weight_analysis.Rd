@@ -15,22 +15,27 @@ morris_weight_analysis(
 )
 }
 \arguments{
-\item{correlations:}{correlations should pass like c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)}
+\item{correlations}{Correlations to meta-analyze.}
 
-\item{sample_sizes:}{sample sizes should pass like c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)}
+\item{sample_sizes}{Sample sizes aligned to \code{correlations}.}
 
-\item{reliability_of_x:}{reliability of x should pass like c(.85, NA, NA, .86, .80, .79, .91, .85, .92, .85)}
+\item{reliability_of_x}{Reliability estimates for the x variable in each
+study.}
 
-\item{reliability_of_y:}{reliability of y should pass like c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)}
+\item{reliability_of_y}{Reliability estimates for the y variable in each
+study.}
 
-\item{significance_levels:}{Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass}
+\item{significance_levels}{Numeric vector giving interval levels, for example
+\code{c(0.95, 0.80)}.}
 
-\item{default_reliability_of_x:}{if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
-#'@param default_reliability_of_y: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
-like c(0.95, 0.80)}
+\item{default_reliability_of_x}{Default replacement for missing x
+reliabilities. If \code{NULL}, the mean of the observed reliabilities is used.}
+
+\item{default_reliability_of_y}{Default replacement for missing y
+reliabilities. If \code{NULL}, the mean of the observed reliabilities is used.}
 }
 \value{
-result data frame
+A one-row data frame of Morris-weight summary results.
 }
 \description{
 Morris weigth function
