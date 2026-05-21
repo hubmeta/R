@@ -4,7 +4,26 @@
 \alias{mica}
 \title{Matrix Imputation with Correlation-Aware Diagnostics}
 \usage{
-mica(corr_matrix, k_matrix = NULL, tau_matrix = NULL, pd_step = 0.01, ...)
+mica(
+  corr_matrix,
+  k_matrix = NULL,
+  tau_matrix = NULL,
+  engine = c("deterministic", "stan"),
+  pd_step = 0.01,
+  chains = 4,
+  iter = 1000,
+  warmup = floor(iter/2),
+  seed = 20260521,
+  adapt_delta = 0.95,
+  max_treedepth = 12,
+  prior_prec_floor = 0.1,
+  prior_prec_mult = 1,
+  tau2_scale = 0.05,
+  lkj_eta = 1,
+  n_avg_per_study = 200,
+  refresh = 0,
+  ...
+)
 }
 \arguments{
 \item{corr_matrix}{A symmetric correlation matrix with ones on the diagonal
@@ -16,20 +35,69 @@ and \code{NA} entries for missing off-diagonal cells.}
 \item{tau_matrix}{Optional symmetric heterogeneity matrix aligned to
 \code{corr_matrix}.}
 
+\item{engine}{Completion engine. Use \code{"deterministic"} for the
+PD-projected fill or \code{"stan"} for the Bayesian MICA model.}
+
 \item{pd_step}{Step size for PD-feasibility interval sweeps.}
 
-\item{...}{Additional arguments passed to \code{mica_fill_pd()}.}
+\item{chains}{Number of Stan chains when \code{engine = "stan"}.}
+
+\item{iter}{Number of post-warmup iterations per chain when
+\code{engine = "stan"}.}
+
+\item{warmup}{Number of warmup iterations per chain when \code{engine = "stan"}.}
+
+\item{seed}{Random seed passed to Stan when \code{engine = "stan"}.}
+
+\item{adapt_delta}{Stan \code{adapt_delta} when \code{engine = "stan"}.}
+
+\item{max_treedepth}{Stan \code{max_treedepth} when \code{engine = "stan"}.}
+
+\item{prior_prec_floor}{Minimum prior precision on the Fisher-z scale when
+\code{engine = "stan"}.}
+
+\item{prior_prec_mult}{Multiplier applied to the regression-bound prior
+precision when \code{engine = "stan"}.}
+
+\item{tau2_scale}{Scale parameter for the half-Cauchy prior on \code{tau} when
+\code{engine = "stan"}.}
+
+\item{lkj_eta}{LKJ concentration parameter when \code{engine = "stan"}.}
+
+\item{n_avg_per_study}{Average per-study sample size used when only \code{k}
+counts are available and \code{engine = "stan"}.}
+
+\item{refresh}{Stan refresh interval when \code{engine = "stan"}.}
+
+\item{...}{Additional arguments passed to \code{mica_fill_pd()} or
+\code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}} depending on \code{engine}.}
 }
 \value{
-An object of class \code{"mica"}.
+An object of class \code{"mica"} for deterministic fits or
+\code{"mica_stan"} for Bayesian fits.
 }
 \description{
-Completes a partial correlation matrix with a deterministic
-positive-definite fill and attaches per-cell diagnostics and triage labels.
+Completes a partial correlation matrix with either a deterministic
+positive-definite fill or the Bayesian Stan engine, then attaches per-cell
+diagnostics and triage labels.
 }
 \details{
-This is the package-facing MICA entry point for the current development
-version of \code{hubmeta}. It returns a positive-definite completed matrix plus
-reportability diagnostics. Bayesian uncertainty layers can be added on top
-of this object in later versions.
+This is the package-facing MICA front door in \code{hubmeta}.
+}
+\examples{
+toy <- matrix(c(
+  1.00, 0.32,   NA, 0.21,
+  0.32, 1.00, 0.28,   NA,
+    NA, 0.28, 1.00, 0.41,
+  0.21,   NA, 0.41, 1.00
+), nrow = 4, byrow = TRUE)
+
+det_fit <- mica(toy)
+det_fit
+
+\donttest{
+bayes_fit <- mica(toy, engine = "stan", chains = 1, iter = 200,
+                  warmup = 100, refresh = 0)
+bayes_fit
+}
 }

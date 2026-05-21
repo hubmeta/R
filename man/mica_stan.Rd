@@ -31,7 +31,7 @@ and \code{NA} entries for missing off-diagonal cells.}
 \code{corr_matrix}.}
 
 \item{tau_matrix}{Optional symmetric heterogeneity matrix aligned to
-\code{corr_matrix}. Included for API compatibility and future extensions.}
+\code{corr_matrix}.}
 
 \item{chains}{Number of Stan chains.}
 
@@ -65,9 +65,8 @@ counts are available.}
 An object of class \code{"mica_stan"}.
 }
 \description{
-Fits the Bayesian MICA correlation-completion model using the package's
-precompiled Stan model and returns posterior summaries for the missing
-cells along with a posterior-mean completed matrix.
+Compatibility wrapper for users who want to explicitly request the Stan
+engine. Internally this forwards to \code{mica(..., engine = "stan")}.
 }
 \examples{
 \donttest{
