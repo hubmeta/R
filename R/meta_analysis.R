@@ -1,16 +1,20 @@
 #'Meta analysis main function
 #'
-#'@param correlations: correlations should pass like c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)
-#'@param sample_sizes: sample sizes should pass like c(426, 328, 122, 284, 472, 154, 372, 674, 110, 116)
-#'@param reliability_of_x: reliability of x should pass like c(.85, NA, NA, .86, .80, .79, .91, .85, .92, .85)
-#'@param reliability_of_y: reliability of y should pass like c(.63, .63, .62, .39, .24, .85, .89, .48, .68, .84)
-#'@param significance_levels: Significance level of 1)Confidence intervals; 2)Credibility intervals and it should pass
-#'@param default_reliability_of_x: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
-#'#'@param default_reliability_of_y: if you add any number it will be the default value and if you pass NULL it will replace with average of other reliabilities
-# comment test
-
-#' like c(0.95, 0.80)
-#'@return result data frame
+#' @param correlations Correlations, for example
+#'   `c(.18, .0, .08, .15, .27, .1, .28, .17, .02, .28)`.
+#' @param sample_sizes Sample sizes aligned to `correlations`.
+#' @param reliability_of_x Reliability estimates for the x variable in each
+#'   study.
+#' @param reliability_of_y Reliability estimates for the y variable in each
+#'   study.
+#' @param significance_levels Numeric vector giving the confidence-interval and
+#'   credibility-interval levels, for example `c(0.95, 0.80)`.
+#' @param default_reliability_of_x Default replacement for missing x
+#'   reliabilities. If `NULL`, the mean of the observed reliabilities is used.
+#' @param default_reliability_of_y Default replacement for missing y
+#'   reliabilities. If `NULL`, the mean of the observed reliabilities is used.
+#'
+#' @return A one-row data frame of meta-analytic summary statistics.
 #'@export
 #'
 
@@ -73,8 +77,8 @@ meta_analysis <- function(
   sigmarho <- sqrt(sigmarho2)                                    #Residual S.D. (ơp)
   PercExp   <- ifelse((sigmar2 - sigmae2) < 0, 0, sigmae2/sigmar2 ) #Percentage explained (by sampling error)
 
-  siglev <- qnorm(1 - (1 - significance_levels[1]) / 2)                              #Significance level confidence interval
-  credsig <- qnorm(1 - (1 - significance_levels[2]) / 2)                             #Significance level credibility interval
+  siglev <- stats::qnorm(1 - (1 - significance_levels[1]) / 2)                              #Significance level confidence interval
+  credsig <- stats::qnorm(1 - (1 - significance_levels[2]) / 2)                             #Significance level credibility interval
 
   CIlowr <- rmean - siglev * (1 - rmean^2) / sqrt(N - K)                                    #Random-Effects Model, Un-Adjusted , Confidence interval lower bound
   CIhighr <- rmean + siglev * (1 - rmean^2) / sqrt(N - K)                                #Random-Effects Model, Un-Adjusted , Confidence interval upper bound
@@ -168,4 +172,3 @@ meta_analysis <- function(
 
   return(results)
 }
-
