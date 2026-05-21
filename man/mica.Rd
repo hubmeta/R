@@ -18,7 +18,7 @@ and \code{NA} entries for missing off-diagonal cells.}
 
 \item{pd_step}{Step size for PD-feasibility interval sweeps.}
 
-\item{...}{Additional arguments passed to \code{\link[=mica_fill_pd]{mica_fill_pd()}}.}
+\item{...}{Additional arguments passed to \code{mica_fill_pd()}.}
 }
 \value{
 An object of class \code{"mica"}.

@@ -14,7 +14,7 @@ mica_triage(
 )
 }
 \arguments{
-\item{diagnostics}{A diagnostics data frame from \code{\link[=mica_diagnostics]{mica_diagnostics()}}.}
+\item{diagnostics}{A diagnostics data frame from \code{mica_diagnostics()}.}
 
 \item{pd_pinned_cutoff}{Width cutoff for PD-pinned cells.}
 

@@ -15,7 +15,7 @@
 #' @param tau_matrix Optional symmetric heterogeneity matrix aligned to
 #'   `corr_matrix`.
 #' @param pd_step Step size for PD-feasibility interval sweeps.
-#' @param ... Additional arguments passed to [mica_fill_pd()].
+#' @param ... Additional arguments passed to `mica_fill_pd()`.
 #'
 #' @return An object of class `"mica"`.
 #' @export

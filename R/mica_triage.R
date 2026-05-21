@@ -4,7 +4,7 @@
 #' distinguish tightly identified, prior-dominant, and point-estimate-only
 #' cells.
 #'
-#' @param diagnostics A diagnostics data frame from [mica_diagnostics()].
+#' @param diagnostics A diagnostics data frame from `mica_diagnostics()`.
 #' @param pd_pinned_cutoff Width cutoff for PD-pinned cells.
 #' @param regression_pinned_cutoff Width cutoff for regression-pinned cells.
 #' @param data_dominant_cutoff Minimum anchor `R^2` threshold for

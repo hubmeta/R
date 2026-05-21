@@ -8,7 +8,7 @@
 #' @param k_matrix Optional matrix of study counts aligned to `corr_matrix`.
 #' @param tau_matrix Optional matrix of heterogeneity values aligned to
 #'   `corr_matrix`.
-#' @param fill Optional output from [mica_fill_pd()]. If omitted, a
+#' @param fill Optional output from `mica_fill_pd()`. If omitted, a
 #'   deterministic fill is computed internally.
 #' @param pd_step Step size used when sweeping the PD-feasibility interval.
 #'

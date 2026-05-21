@@ -116,3 +116,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/r,linux,macos,windows
+src/*.o
+src/*.so
+hubmeta.Rcheck/
+*.Rcheck/

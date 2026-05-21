@@ -21,7 +21,7 @@ and \code{NA} entries for missing off-diagonal cells.}
 \item{tau_matrix}{Optional matrix of heterogeneity values aligned to
 \code{corr_matrix}.}
 
-\item{fill}{Optional output from \code{\link[=mica_fill_pd]{mica_fill_pd()}}. If omitted, a
+\item{fill}{Optional output from \code{mica_fill_pd()}. If omitted, a
 deterministic fill is computed internally.}
 
 \item{pd_step}{Step size used when sweeping the PD-feasibility interval.}
